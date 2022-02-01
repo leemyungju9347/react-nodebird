@@ -8,13 +8,13 @@ const initialState = {
     content: '첫번째 게시글 #해시태그 #익스프레스',
     Image: [
       {
-        src: 'https',
+        src: 'https://pbs.twimg.com/profile_images/984211816053071872/MouQshHO_400x400.jpg',
       },
       {
-        src: 'https',
+        src: 'https://i.pinimg.com/736x/1c/80/ed/1c80ede4da3396331b732d3bf4414fb1.jpg',
       },
       {
-        src: 'https',
+        src: 'https://pbs.twimg.com/media/FKcK7q0agAAnane?format=jpg&name=large',
       },
     ],
     Comments: [

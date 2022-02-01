@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Input, Menu, Row, Col } from 'antd';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import UserProfile from './UserProfile';
-import LoginForm from './LoginForm';
+import UserProfile from '../auth/UserProfile';
+import LoginForm from '../auth/LoginForm';
 
 const SearchInput = styled(Input.Search)`
     vertical-align:middle;

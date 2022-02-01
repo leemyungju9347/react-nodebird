@@ -1,15 +1,20 @@
-import { Card, Popover, Button, Avatar } from 'antd';
+import { Card, Popover, Button, Avatar, List, Comment } from 'antd';
 import React, { useCallback, useState } from 'react';
 import { EllipsisOutlined, HeartOutlined, MessageOutlined, RetweetOutlined, HeartTwoTone } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import PostImages from './PostImages';
+import CommentForm from './CommentForm';
+import PostCardContent from './PostCardContent';
 
 // popover 더보기 버튼
 // ☠️ more 버튼에서 수정 -> 본인만 / 신고 -> 남들만 할 수 있도록 구현
 const PostCard = ({ post }) => {
+  // 내 아이디
   const userId = useSelector((state) => state.user.me);
+  // 좋아요
   const [liked, setLiked] = useState(false);
+  // 댓글
   const [commentFormOpened, setCommentFormOpened] = useState(false);
 
   // 좋아요 토글 버튼
@@ -21,11 +26,13 @@ const PostCard = ({ post }) => {
   const onToggleComment = useCallback(() => {
     setCommentFormOpened((prevState) => !prevState);
   }, []);
+console.log('PostCard의 post 👿',post);
 
   return (
     <div style={{ marginBottom: 20 }}>
+      {/* 게시글 */}
       <Card
-        cover={post.Images && <PostImages images={post.Images} />}
+        cover={post.Image[0] && <PostImages images={post.Image} />}
         actions={[
           <RetweetOutlined key="retweet" />,
           liked
@@ -55,18 +62,34 @@ const PostCard = ({ post }) => {
         <Card.Meta
           avatar={<Avatar>{post.User.nickname}</Avatar>}
           title={post.User.nickname}
-          description={post.content}
+          description={<PostCardContent postData={post.content} />}
         />
         {/* <Buttons /> */}
       </Card>
+      {/* 댓글 */}
       {
         commentFormOpened && (
         <div>
-          댓글 부분
+          {/* 댓글 입력 */}
+          <CommentForm post={post} />
+          {/* 댓글 리스트 */}
+          <List
+            header={`${post.Comments.length}개의 댓글`}
+            itemLayout="horizontal"
+            dataSource={post.Comments}
+            renderItem={(item) => (
+              <li>
+                <Comment
+                  author={item.User.nickname}
+                  avatar={(<Avatar>{item.User.nickname[0]} </Avatar>)}
+                  content={item.content}
+                />
+              </li>
+            )}
+          />
         </div>
         )
       }
-      {/* <CommentForm /> */}
       {/* <Comments /> */}
     </div>
   );
